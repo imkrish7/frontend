@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import styled from 'styled-components';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DashboardLayout from './Components/Layout/DashboardLayout';
+import Dashboard from './Components/Dashboard';
+import RequiredAuth from './Components/RequiredAuth';
+import { AuthProvider } from './Context/AuthProvider';
+import LandingPage from './Components/LandingPage';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+    <Container>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<DashboardLayout />}>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/dashboard" element={<RequiredAuth><Dashboard /></RequiredAuth>} />
+        </Route>
+        
+      </Routes>
+    </BrowserRouter>
+    </Container>
+    </AuthProvider>
   );
 }
+
+const Container = styled.div`
+  width: 100%;
+  min-height: inherit;
+  background: #ffffff4a;
+  backdrop-filter: blur(10px);
+
+`
 
 export default App;
